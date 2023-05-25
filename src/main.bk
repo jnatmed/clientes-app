@@ -1,0 +1,32 @@
+	app!.innerHTML = `
+<form >
+	<div class="input-group mb-3">
+		<span class="input-group-text">Nombre</span>
+		<input id="first_name" type="text" aria-label="First name" class="form-control">
+		<span class="input-group-text">Apellido</span>
+		<input id="last_name" type="text" aria-label="Last name" class="form-control">
+		<span class="input-group-text">N° Telefono</span>
+		<input id="phone" type="text" aria-label="phone" class="form-control">
+	</div>	
+	<div class="input-group mb-3">
+		<span class="input-group-text">Empresa</span>
+		<input id="empresa" type="text" aria-label="empresa" class="form-control">
+		<span class="input-group-text">Cuit/Cuil</span>
+		<input id="cuil" type="text" aria-label="cuit cuil" class="form-control">
+		<select id="pais" class="form-select" aria-label="Default select example">
+		<option selected>Pais</option>
+			<option value="argentina">argentina</option>
+			<option value="brazil">Brazil</option>
+			<option value="uruguay">Paraguay</option>
+	  </select>	</div>	
+	<div class="input-group mb-3">
+		<span class="input-group-text">Localidad</span>
+		<input id="localidad" type="text" aria-label="localidad" class="form-control">
+		<span class="input-group-text">Codigo Postal</span>
+		<input id="cp" type="text" aria-label="cp" class="form-control">
+		<span class="input-group-text">Direccion</span>
+		<input id="direccion" type="text" aria-label="direccion" class="form-control">
+	</div>	
+	<button id="btnenviar">Enviar Datos</button>
+</form>
+`;
