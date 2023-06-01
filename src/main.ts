@@ -36,23 +36,26 @@ clientes?.addEventListener('click', (e) => {
 		app!.innerHTML = '';
 
 		let tabla = document.createElement("table");
-		tabla.className = 'blueTable';
+		tabla.className = 'table table-bordered';
 		let tblBody = document.createElement("tbody");
 		let thead = document.createElement("thead");
 		thead.innerHTML = `
 			<tr>
-			<th>Nombre</th>
-			<th>Apellido</th>
-			<th>Numero de Telefono</th>
-			<th>Pais</th>
-			<th>Localidad</th>
-			<th>Codigo Postal</th>
-			<th>Direccion</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Apellido</th>
+			<th scope="col">Numero de Telefono</th>
+			<th scope="col">Pais</th>
+			<th scope="col">Localidad</th>
+			<th scope="col">Codigo Postal</th>
+			<th scope="col">Direccion</th>
 			</tr>
 		`;
 		tabla.appendChild(thead);
 		response['data'].forEach((element: any) => {
 			let fila = document.createElement('tr');
+			// let th = document.createElement('th');
+			// th.scope = "row";
+			// fila.appendChild(th);
 			fila.appendChild(crearNodo(element.nombre));
 			fila.appendChild(crearNodo(element.apellido));
 			fila.appendChild(crearNodo(element.numeroTelefono));			
@@ -93,12 +96,14 @@ crearCliente?.addEventListener('click', () => {
 			<input id="first_name" type="text" aria-label="First name" class="form-control">
 			<span class="input-group-text">Apellido</span>
 			<input id="last_name" type="text" aria-label="Last name" class="form-control">
-			<span class="input-group-text">N° Telefono</span>
-			<input id="phone" type="text" aria-label="phone" class="form-control">
 		</div>	
 		<div class="input-group mb-3">
+			<span class="input-group-text">N° Telefono</span>
+			<input id="phone" type="text" aria-label="phone" class="form-control">
 			<span class="input-group-text">Empresa</span>
 			<input id="empresa" type="text" aria-label="empresa" class="form-control">
+		</div>	
+		<div class="input-group mb-3">
 			<span class="input-group-text">Cuit/Cuil</span>
 			<input id="cuil" type="text" aria-label="cuit cuil" class="form-control">
 			<select id="pais" class="form-select" aria-label="Default select example">
@@ -116,7 +121,7 @@ crearCliente?.addEventListener('click', () => {
 			<span class="input-group-text">Direccion</span>
 			<input id="direccion" type="text" aria-label="direccion" class="form-control">
 		</div>	
-		<button id="btnenviar">Enviar Datos</button>
+		<button class="btn btn-outline-success mb-3" id="btnenviar">Enviar Datos</button>
 	</form>
 	`;	
 	
@@ -152,8 +157,12 @@ crearCliente?.addEventListener('click', () => {
 			});
 
 		}else{	
-			console.table(errores);
-		}
+			const divError = document.createElement('div');
+			divError.className = 'alert alert-danger';
+			divError.role = 'alert';	
+			divError.innerHTML = errores;
+			app!.appendChild(divError);
+			}
 
 	});
 
