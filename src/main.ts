@@ -36,9 +36,10 @@ clientes?.addEventListener('click', (e) => {
 		app!.innerHTML = '';
 
 		let tabla = document.createElement("table");
-		tabla.className = 'table table-bordered';
+		tabla.className = 'table table-hover table-sm table-responsive';
 		let tblBody = document.createElement("tbody");
 		let thead = document.createElement("thead");
+		
 		thead.innerHTML = `
 			<tr>
 			<th scope="col">Nombre</th>
@@ -49,20 +50,32 @@ clientes?.addEventListener('click', (e) => {
 			<th scope="col">Codigo Postal</th>
 			<th scope="col">Direccion</th>
 			</tr>
+		
 		`;
+		thead.className = 'thead-dark';
 		tabla.appendChild(thead);
 		response['data'].forEach((element: any) => {
 			let fila = document.createElement('tr');
-			// let th = document.createElement('th');
-			// th.scope = "row";
-			// fila.appendChild(th);
 			fila.appendChild(crearNodo(element.nombre));
 			fila.appendChild(crearNodo(element.apellido));
 			fila.appendChild(crearNodo(element.numeroTelefono));			
 			fila.appendChild(crearNodo(element.pais));			
 			fila.appendChild(crearNodo(element.localidad));			
 			fila.appendChild(crearNodo(element.codPostal));
-			fila.appendChild(crearNodo(element.direccion));			
+			fila.appendChild(crearNodo(element.direccion));	
+			let buttonAction = document.createElement('button');
+			buttonAction.innerHTML = `
+				<button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+			`;
+			buttonAction?.addEventListener('click',  async (e : Event) => {
+				/**
+				 * llamo a la api, borro y vuelvo a actualizar a la tabla
+				 */
+				e.preventDefault();
+				
+			});
+
+			fila.appendChild(buttonAction);
 			tblBody.appendChild(fila);
 		});
 		tabla.appendChild(tblBody);
@@ -107,7 +120,7 @@ crearCliente?.addEventListener('click', () => {
 			<span class="input-group-text">Cuit/Cuil</span>
 			<input id="cuil" type="text" aria-label="cuit cuil" class="form-control">
 			<select id="pais" class="form-select" aria-label="Default select example">
-				<option selected>Pais</option>
+				<option selected></option>
 				<option value="argentina">argentina</option>
 				<option value="brazil">Brazil</option>
 				<option value="uruguay">Paraguay</option>
@@ -126,6 +139,9 @@ crearCliente?.addEventListener('click', () => {
 	`;	
 	
 	const btnenviar = $('#btnenviar');
+	const divError = document.createElement('div');
+	divError.className = 'alert alert-danger';
+	divError.role = 'alert';	
 
 	btnenviar?.addEventListener('click',  async (e : Event) => {
 		e.preventDefault();
@@ -157,9 +173,6 @@ crearCliente?.addEventListener('click', () => {
 			});
 
 		}else{	
-			const divError = document.createElement('div');
-			divError.className = 'alert alert-danger';
-			divError.role = 'alert';	
 			divError.innerHTML = errores;
 			app!.appendChild(divError);
 			}
@@ -194,10 +207,13 @@ function cargarInputs(){
 function validarInputs(inputs : any) {
 	const err : any = [];
 	if(inputs.nombre.length == 0 || inputs.apellido.length == 0) {
-		err.push("El primer nombre o apellido estan vacio");
+		err.push(" El primer nombre o apellido estan vacio ");
 	}	
+	if(inputs.pais.length == 0){
+		err.push(" campo pais vacio ");
+	}
 	if(inputs.codPostal.length != 4) {
-		err.push("el cuil debe tener una longitud de 11 digitos");
+		err.push(" el codigo Postal debe tener una longitud de 4 digitos ");
 	}
 
 	return err;
